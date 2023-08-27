@@ -1,0 +1,23 @@
+function push_back(object){
+	backPointer.next = object;
+	backPointer = object;
+	size++;
+}
+
+function push_front(object){
+	frontPointer.previous = object;
+	frontPointer = object;
+	size++;
+}
+
+function push_middle(object){
+	//size er en property som sier størrelsen av listen.
+	if size %% 2 == 0{
+		middlePointer.next = object;
+		middlepointer = object;
+	}else{
+		middlePointer.previous = object;
+		middlePointer = object;
+	}
+	this.size++
+}
