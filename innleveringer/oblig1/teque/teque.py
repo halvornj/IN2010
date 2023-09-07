@@ -14,8 +14,8 @@ class Teque:
     def push_middle(self, x):
         self.array.insert(math.ceil(len(self.array)/2), x)
 
-    def get(self, i:int):
-        return self.array[i]
+    def get(self, i:int):   #står spesifikt at metoden skal printe, så returnerer ingenting
+        print(self.array[i])
 
     def __str__(self):
         outputStr: str = "["
@@ -28,3 +28,11 @@ class Teque:
     
     #TODO __iter__() and __next__()
 
+def main():
+    teq :Teque = Teque()
+    n = int(input())
+    for i in range(n):
+        instruction, arg = input().split()
+        eval(f"teq.{instruction}({arg})")
+
+main()
