@@ -10,11 +10,11 @@ import time
 # Put the sorting algorithms under test for part 1 here
 ALGS1 = [insertion.sort, merge.sort]
 # Put the sorting algorithms under test for part 2 here
-ALGS2 = [insertion.sort, merge.sort]
+ALGS2 = [merge.sort]
 # Time limit for a single sorting in milliseconds
-TIME_LIMIT_MS = 100
+TIME_LIMIT_MS = 10000
 # How much n grows each iteration for part 2
-INCREMENT = 1
+INCREMENT = 5
 
 
 # We use the module as name for the algorithm
@@ -63,7 +63,7 @@ def runalg(alg, A, i, discarded):
     countingA = CountSwaps([CountCompares(x) for x in A[:i]])
     now = time.time()
 
-    alg(countingA)
+    countingA = alg(countingA)
 
     timeus = (time.time() - now) * 1000000
     timems = timeus / 1000

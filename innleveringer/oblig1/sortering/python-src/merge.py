@@ -13,7 +13,9 @@ def sort(A:CountSwaps):
     if(len(A) <=1):
         return A
     i = math.floor(len(A)/2)
-    return merge(CountSwaps(sort(A[:i])), CountSwaps(sort(A[i:])))
+    arr1 = CountSwaps(sort(A[:i]))
+    arr2 = CountSwaps(sort(A[i:]))
+    return merge(arr1, arr2, CountSwaps(A))
 
 
 def merge(arr1: CountSwaps, arr2:CountSwaps, A:CountSwaps) -> CountSwaps:
@@ -29,24 +31,22 @@ def merge(arr1: CountSwaps, arr2:CountSwaps, A:CountSwaps) -> CountSwaps:
     """
     i=0
     j=0
-    finalArray = CountSwaps()
-    finalArray.set_swaps(arr1.get_swaps()+ arr2.get_swaps())
-    while(i<=(len(arr1)-1) and j<=(len(arr2)-1)):
+    while(i<(len(arr1)) and j<(len(arr2))):
         if(arr1[i] < arr2[j]):
-            finalArray.append(arr1[i])
-            finalArray.swap(0,0)
+            A[i+j] = arr1[i]
+            A.swap(0,0)
             i = i+1
         else:
-            finalArray.append(arr2[j])
-            finalArray.swap(0,0)
+            A[i+j] = arr2[j]
+            A.swap(0,0)
             j = j+1
-    while(i<=len(arr1)-1):
-        finalArray.append(arr1[i])
-        finalArray.swap(0,0)
+    while(i<len(arr1)):
+        A[i+j] = arr1[i]
+        A.swap(0,0)
         i = i+1
-    while(j<=len(arr2)-1):
-        finalArray.append(arr2[j])
-        finalArray.swap(0,0)
+    while(j<len(arr2)):
+        A[i+j] = arr2[j]
+        A.swap(0,0)
         j = j+1
-    return finalArray
+    return A
 
