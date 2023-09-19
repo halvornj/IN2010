@@ -18,6 +18,10 @@ def plot(filename):
     MERGE_CMP = 4
     MERGE_SWAPS = 5
     MERGE_TIME = 6
+    #! change these when plotting a new file
+    outputFile = "tid_n_1000000"
+    TITLE ="tid/elementer (nearly sorted) (n=1000000)"
+
 
     with open(filename, 'r') as csvfile:
         lines = csv.reader(csvfile, delimiter=',')
@@ -26,17 +30,20 @@ def plot(filename):
             #use the constants defined above to determine what gets plotted.
             #!remember to change axis-titles. too lazy to program that in, this is already overkill when i could just screenshot excel...
             x.append(int(row[N]))
-            yInsert.append(int(row[INSERTION_TIME]))
             yMerge.append(int(row[MERGE_TIME]))
+            #yInsert.append(int(row[INSERTION_TIME]))
 
-    plt.plot(x,yMerge, color='g',marker='o', label="Merge")
-    plt.plot(x, yInsert, color='r', marker='o', label="Insertion")
+    plt.plot(x,yMerge, color='g', label="Merge")
+    #plt.plot(x, yInsert, color='r', label="Insertion")
 
     plt.xlabel('number of elements (n)')
     plt.ylabel('time (μs)')
-    plt.title("tid/elementer (nearly sorted) (n=10000)")
+    plt.title(TITLE)
     plt.grid()
     plt.legend()
+
+    plt.savefig("../output_graphs/"+outputFile)
+    
     plt.show()
 
 
