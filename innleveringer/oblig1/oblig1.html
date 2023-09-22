@@ -1,0 +1,64 @@
+<h1 id="in2010-oblig-1---halvorin">IN2010 oblig 1 - halvorin</h1>
+<h2 id="teque">Teque</h2>
+<ol type="a">
+<li>pseudokode for en array-basert implementasjon, <code>collection[]</code></li>
+</ol>
+<pre><code>function push_back(element)
+   collection.append(element)
+</code></pre>
+<pre><code>function push_front(element)
+   collection.insert(0,element)
+</code></pre>
+<pre><code>function push_middle(element)
+   collection.insert(⌊|collection|/2⌋, element)
+</code></pre>
+<pre><code>function get(index)
+   print(collection[index])</code></pre>
+<ol start="2" type="a">
+<li><p>kjørbar i <code>python3 teque/teque.py</code></p></li>
+<li></li>
+</ol>
+<ul>
+<li>push_back(): enkel tilordning. O(1)</li>
+<li>push_front():enkel tilordning. O(1)</li>
+<li>push_middle(): enkel tilordning. O(1)</li>
+<li>get(): oppslag i array. O(1)</li>
+</ul>
+<ol start="4" type="a">
+<li>med ubegrenset input-størrelse kan vi redusere konstanter, som 10<sup>6</sup> til 1, og kun se på det største leddet. Dette lar oss få et grovere overblikk over kjøretid, og er betraktelig enklere å analysere.</li>
+</ol>
+<h2 id="sortering">Sortering</h2>
+<p>MergeSort og InsertionSort er implementert i hhv. <code>sortering/python-src/merge.py</code> og <code>sortering/python-src/insertion.py</code>, og csv-filene genereres med <code>python3 sortering/python-src/main.py [FILENAME]</code>.</p>
+<p><em>grafer kan plottes vha. plotter.py i samme mappe. programmet tar sti til en .csv som argument, men aksetitler mm. må konfigureres i filen</em></p>
+<h3 id="spørsmål-fra-eksperimenter">spørsmål fra eksperimenter</h3>
+<ul>
+<li>Q: I hvilken grad stemmer kjøretiden overens med kjøretidsanalysene (store
+<ol start="15" type="A">
+<li>for de ulike algoritmene?</li>
+</ol>
+<p>A: kjøretiden stemmer godt. graf 1 viser kjøretid avhengig av antall elementer, og selv med et lite datasett kan man tydelig se at insertion vokser kvadratisk. Det er vanskeligere å lese av stigningsgraden til merge-sort, da denne vil se lineær ut i forhold til insertion.</p>
+<figure>
+<img src="sortering/output_graphs/tid_n_100.png" title="tid/elementer for merge- og insertion-sort" alt="graph of time/n for insertion- and merge-sort" /><figcaption>graph of time/n for insertion- and merge-sort</figcaption>
+</figure>
+<p>[graf 1]</p></li>
+<li><p>Q: Hvordan er antall sammenligninger og antall bytter korrelert med kjøre- tiden?</p>
+<p>A: swaps og sammenligninger vokser i lik takt for insertion-sort, lineært.</p>
+<figure>
+<img src="sortering/output_graphs/swap_compare_time_insertion.png" title="graf 2" alt="graph of swaps and compares over time" /><figcaption>graph of swaps and compares over time</figcaption>
+</figure>
+<p>[graf 2]</p></li>
+<li><p>Q: Hvilke sorteringsalgoritmer utmerker seg positivt når n er veldig liten? Og når n er veldig stor?</p>
+<p>A: ved svært små n kan insertion være raskere enn merge-sort, som man kan se tidlig i graf 1, men merge-sort vil fort bli mer effektiv når n blir større.</p></li>
+<li><p>Q: Hvilke sorteringsalgoritmer utmerker seg positivt for de ulike inputfile- ne?</p>
+<p>A: Mens merge-sort er raskere for store tilfeldige input-filer, vil insertion-sort være raskere for ‘nearly_sorted’-filene, slik vist i graf 3.</p>
+<figure>
+<img src="sortering/output_graphs/tid_n_10000_NS.png" title="graf 3" alt="graph of time / n for merge and insertion sort, nearly sorted input." /><figcaption>graph of time / n for merge and insertion sort, nearly sorted input.</figcaption>
+</figure>
+<p>[graf 3]</p></li>
+<li><p>Q: Har du noen overraskende funn å rapportere?</p>
+<p>A: Jeg synes det er overraskende å se forskjellen i hvor effektiv insertion-sort er avhengig av om det er et tilfeldig eller et nesten sortert datasett. Dette er veldig tydelig når man ser på grafer med samme størrelse, graf 1 og graf 4. i graf 4 er merge-sort praktisk talt flat i forhold til insertion-sort, mens i graf 3 vokser insertion tilsynelatende lineært med et lavere stigningstall en merge.</p>
+<figure>
+<img src="sortering/output_graphs/tid_n_10000.png" title="graf 4" alt="graph of time / n for menge and insertion sort, large dataset." /><figcaption>graph of time / n for menge and insertion sort, large dataset.</figcaption>
+</figure>
+<p>[graf 4]</p></li>
+</ul>
