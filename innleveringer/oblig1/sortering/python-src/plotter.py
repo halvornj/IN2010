@@ -10,6 +10,8 @@ def plot(filename):
     yMerge = []
     yInsert = []
     headers: str = ""
+
+    yInsertComps = []
     
     N:Final = 0
     INSERTION_CMP = 1
@@ -19,8 +21,8 @@ def plot(filename):
     MERGE_SWAPS = 5
     MERGE_TIME = 6
     #! change these when plotting a new file
-    outputFile = "tid_n_1000000"
-    TITLE ="tid/elementer (nearly sorted) (n=1000000)"
+    outputFile = "swap_compare_time_insertion"
+    TITLE ="antall sammenligninger og swaps / tid"
 
 
     with open(filename, 'r') as csvfile:
@@ -29,15 +31,17 @@ def plot(filename):
         for row in lines:
             #use the constants defined above to determine what gets plotted.
             #!remember to change axis-titles. too lazy to program that in, this is already overkill when i could just screenshot excel...
-            x.append(int(row[N]))
-            yMerge.append(int(row[MERGE_TIME]))
-            #yInsert.append(int(row[INSERTION_TIME]))
+            x.append(int(row[INSERTION_TIME]))
+            #yMerge.append(int(row[3]))
+            yInsert.append(int(row[INSERTION_SWAPS]))
+            yInsertComps.append(int(row[INSERTION_CMP]))
 
-    plt.plot(x,yMerge, color='g', label="Merge")
-    #plt.plot(x, yInsert, color='r', label="Insertion")
+    #plt.plot(x,yMerge, color='g', label="Merge")
+    plt.plot(x, yInsert, color='r', label="Insertion swaps")
+    plt.plot(x, yInsertComps, color='g', label="insertion compares")
 
-    plt.xlabel('number of elements (n)')
-    plt.ylabel('time (μs)')
+    plt.xlabel("time (μs)")
+    plt.ylabel('antall')
     plt.title(TITLE)
     plt.grid()
     plt.legend()
