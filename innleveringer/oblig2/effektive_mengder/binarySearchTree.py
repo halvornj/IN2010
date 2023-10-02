@@ -37,6 +37,8 @@ class BinarySearchTree(Generic[T]):
         if x < node.element: return self.rec_search(node.left, x)
         if x> node.element:return self.rec_search(node.right, x)
 
+    def contains(self, x:T) ->bool:
+        return (self.search(x) is not None) #antar her at du ikke vil ha et binary-tree fyllt med None-values :/
 
     def findMin(self, node:Node) ->Node:
         if not (node.left or node.right):return node
@@ -50,15 +52,15 @@ class BinarySearchTree(Generic[T]):
     def rec_remove(self, x:T, node:Node):
         if node == None:return None
         if x < node.element:
-            node.left = self.rec_remove(node.left, x)
+            node.left = self.rec_remove(x, node.left)
             return node
         if x > node.element:
-            node.right = self.rec_remove(node.right, x)
+            node.right = self.rec_remove(x, node.right)
         if node.left == None: return node.right
         if node.right == None:return node.left
         u = self.findMin(node.right)
         node.element = u.element
-        node.right = self.rec_remove(node.right, u.element)
+        node.right = self.rec_remove(u.element, node.right)
         return node
     
     def __len__(self):
