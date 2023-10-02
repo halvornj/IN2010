@@ -11,19 +11,21 @@ T = TypeVar('T')
 #gjør Generiske typer koden mye tregere? ja. (https://github.com/python/cpython/issues/83349). Gjør jeg det uansett fordi jeg liker statiske typer? ja :)
 class BinarySearchTree(Generic[T]):
     def __init__(self):
-        self.size:int = 0
+        self._size:int = 0  #MÅ ha en metode som heter size() ifølge oppgaven, så denne må hete noe annet. ville heller bare brukt len() men jaja
         self.root:Node = None
 
     def insert(self, x:T) ->T:
-        self.size += 1
-        if self.size == 1:
+        if self._size == 0:
             self.root = Node(x)
+            self._size+=1
             return self.root.element
         return self.rec_insert(x, node=self.root).element
 
 
     def rec_insert(self, x:T, node:Node = None) ->Node:
-        if node is None: node = Node(x)
+        if node is None: 
+            node = Node(x)
+            self._size += 1
         elif x < node.element: node.left = self.rec_insert(x, node=node.left)
         elif x > node.element: node.right = self.rec_insert(x, node=node.right)
         return node
@@ -41,12 +43,11 @@ class BinarySearchTree(Generic[T]):
         return (self.search(x) is not None) #antar her at du ikke vil ha et binary-tree fyllt med None-values :/
 
     def findMin(self, node:Node) ->Node:
-        if not (node.left or node.right):return node
-        node = node.left or node.right  #om .left eksisterer evales del 1 av uttrykket til true, og node blir assignet til node.left. ellers node.right
-        return self.findMin(node)
+        if not node.left :return node
+        return self.findMin(node.left)
     
     def remove(self, x:T):
-        self.size -=1
+        self._size -=1
         return self.rec_remove(x, self.root)
     
     def rec_remove(self, x:T, node:Node):
@@ -63,7 +64,11 @@ class BinarySearchTree(Generic[T]):
         node.right = self.rec_remove(u.element, node.right)
         return node
     
+    def size(self):
+        return self._size
+
     def __len__(self):
-        return self.size
+        return self._size
     
-    #todo def __str__ med DFS, left to right ->small to large
+    #todo def __str__ med DFS, left to right -> small to large
+  
