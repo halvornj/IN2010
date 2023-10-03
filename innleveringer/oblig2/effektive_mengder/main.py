@@ -10,7 +10,7 @@ def main():
             continue
         instruction, arg = inp.split()
         if instruction == "contains":
-            print(structure.contains(int(arg)))
+            print(str(structure.contains(int(arg))).lower())
         else:
             eval(f"structure.{instruction}({int(arg)})")
         
