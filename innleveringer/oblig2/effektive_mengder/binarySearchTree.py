@@ -76,23 +76,21 @@ class BinarySearchTree(Generic[T]):
         Returns:
             the removed element if it existed in the set, otherwise None.
         """
-        self._size -=1
-        
         self.root = self.rec_remove(x, self.root)
-        return self.root.element if self.root is not None else None
+        self._size -=1
+        return self.root.element if self.root is not None else None     #hadde gjort seg med en elvis-operator her da
     
 
     def rec_remove(self, x:T, node:Node|None) ->Node|None:
-        if node == None:
+        if node == None: 
+            self._size+=1
             return None
-        if node.right is None and x > node.element: return node
-        if node.left is None and x< node.element:return node
         if x < node.element:
             node.left = self.rec_remove(x, node.left)
             return node
         if x > node.element:
             node.right = self.rec_remove(x, node.right)
-        #håndterer 0 eller 1 barnepeker, !this is wo die bug wohnt
+            return node
         if node.left == None: return node.right
         if node.right == None:return node.left
         u = self.findMin(node.right)

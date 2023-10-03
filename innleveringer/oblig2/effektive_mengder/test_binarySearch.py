@@ -12,4 +12,7 @@ def test():
     tree.insert(2)
     print(f"{tree.root=}")
     tree.remove(5)
+    tree.insert(4)
+    tree.remove(-10)
+    print(f"{tree.root=}")
 test()
