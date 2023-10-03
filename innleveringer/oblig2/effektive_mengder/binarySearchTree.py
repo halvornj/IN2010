@@ -39,7 +39,7 @@ class BinarySearchTree(Generic[T]):
             node (Node | None): the root of the current sub-tree from which the path to the appropriate insert-position can be found.
 
         Returns:
-            Node: the new node containing x, or if it exists, the node already containing x.
+            Node: the new node containing x, or if it already exists, the node already containing x.
 
         """
         if node is None: 
@@ -51,19 +51,54 @@ class BinarySearchTree(Generic[T]):
     
 
     def search(self, x:T) ->T|None:
+        """method that searches for a spesific element in the set. returns that element if found, otherwise None.
+        Alternatively use set.contains()
+
+        Parameters:
+            x: The element to search for.
+        
+        returns:
+            T if the element was found, None if it wasn't.
+        
+        """
         return self.rec_search(self.root, x)
-    
 
     def rec_search(self, node:Node|None, x:T) -> T|None:
+        """private recursive method used to search for the element.
+
+            Parameters:
+                node (Node | None): the root of the subtree from which the search should be performed
+                x: the element to search for.
+            
+            Returns:
+                T if the element was found, otherwise None.
+        """
         if node == None:return None
         if node.element == x:return node.element
         if x < node.element: return self.rec_search(node.left, x)
         if x> node.element:return self.rec_search(node.right, x)
 
     def contains(self, x:T) ->bool:
+        """ method that searches the set for an element x, and returns wether or not it was found.
+
+            Parameters:
+                x: the element to be searched for.
+            
+            Returns:
+                boolean: True if the element was found, False if not.
+        """
         return (self.search(x) is not None) #antar her at du ikke vil ha et binary-tree fyllt med None-values :/
 
     def findMin(self, node:Node) ->Node:
+        """
+        finds and returns the smallest node in the tree from a root node.
+
+        Parameters:
+            node (Node): the root of the tree from which the smalles child-node should be found.
+        
+        Returns:
+            the smallest node of the tree.
+        """
         if not node.left :return node
         return self.findMin(node.left)
     
@@ -82,6 +117,15 @@ class BinarySearchTree(Generic[T]):
     
 
     def rec_remove(self, x:T, node:Node|None) ->Node|None:
+        """
+        private recursive method to remove a node from the tree.
+
+        Parameters:
+            x: The value of the node that should be removed.
+            node(Node|None): a parent of the node that should be removed, or the node itself.
+        
+        Returns: the root node of the tree with the specified node removed.
+        """
         if node == None: 
             self._size+=1
             return None
@@ -99,6 +143,15 @@ class BinarySearchTree(Generic[T]):
         return node
     
     def size(self):
+        """
+        gives the size of the set. alternatively, use len(set).
+
+        Parameters:
+            none.
+        
+        Returns:
+            int: size of the set.
+        """
         return self._size
 
     def __len__(self):
