@@ -50,7 +50,14 @@ class AvlTree(BinarySearchTree[T]):
 
     def leftRot(self, node:Node) ->Node:
         """
-        todo docstring
+        method takes root of a sub-tree, and rotates the subtree left,
+        meaning the right node of the original root becomes the new root.
+
+        Parameters:
+            node(Node): the root of the subtree to rotate
+
+        Returns:
+            Node: the root of the changed subtree
         """
         newRoot:Node = node.right #type:ignore , roterer aldri til None
         relocate:Node|None = newRoot.left 
@@ -62,7 +69,13 @@ class AvlTree(BinarySearchTree[T]):
         
     def rightRot(self, node:Node) ->Node:
         """
-        todo docstring
+        rotates a sub-tree to the left, meaning the left node of the root becomes the new root.
+
+        Parameters:
+            node(Node):the root of the subtree to rotate
+        
+        Returns:
+            Node: the root of the rotated subtree.
         """
         newRoot:Node = node.left #type:ignore , roterer aldri til None
         relocate:Node|None = newRoot.right
@@ -73,11 +86,17 @@ class AvlTree(BinarySearchTree[T]):
         return newRoot
     
     def balanceFactor(self, node:Node|None) ->int:
+        """
+        todo docstring
+        """
         if node is None: return 0
         return self.height(node.left)-self.height(node.right)
 
     #antar at man ikke vil rotere rundt None, det gir jo ikke mening, så supresser warnings her
     def balance(self, node:Node) ->Node:
+        """
+        todo docstring
+        """
         if self.balanceFactor(node) < -1:
             if self.balanceFactor(node.right) > 0:
                 node.right = self.rightRot(node.right)  #type:ignore
@@ -89,6 +108,9 @@ class AvlTree(BinarySearchTree[T]):
         return node
 
     def insert(self, x:T)->Node|None:
+        """
+        todo docstring
+        """
         if self._size == 0:
             self.root = Node(x)
             self._size+=1
@@ -97,6 +119,9 @@ class AvlTree(BinarySearchTree[T]):
         return self.root.element
 
     def rec_insert(self, x:T, node:Node|None) ->Node:
+        """
+        todo docstring
+        """
         if node is None: 
             node = Node(x)
             self._size += 1
@@ -106,7 +131,9 @@ class AvlTree(BinarySearchTree[T]):
         return self.balance(node)
 
     def rec_remove(self, x:T, node:Node|None) ->Node|None:
-
+        """
+        todo docstring
+        """
         if node == None: 
             self._size+=1
             return None
