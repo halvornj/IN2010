@@ -1,7 +1,8 @@
 from binarySearchTree import BinarySearchTree
+from avlTree import AvlTree
 def main():
     #! endre hva som deklareres som structure for å endre om programmet bruker binært søketre eller AVL-tre
-    structure = BinarySearchTree[int]()
+    structure = AvlTree[int]()
     n = int(input())
     for i in range(n):
         inp = input()

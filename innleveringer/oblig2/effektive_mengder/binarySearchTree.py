@@ -1,11 +1,17 @@
-from node import Node
 from typing import Generic
 from typing import TypeVar
 
-#TODO check that generic type T makes sense
-#TODO docstrings
-
 T = TypeVar('T')
+
+class Node(Generic[T]):
+    def __init__(self, element:T, left=None, right=None):
+        self.element:T = element
+        self.left:Node|None = left
+        self.right:Node|None = right
+
+    def __str__(self)->str:
+        return str(self.element)
+
 
 #*for litt mer forventet oppførsel, der klassen er mer black-box og andre programm ikke trenger holde styr på root og Noder osv, er implementasjonen modifisert for å kun ta element X.
 #gjør Generiske typer koden mye tregere? ja. (https://github.com/python/cpython/issues/83349). Gjør jeg det uansett fordi jeg liker statiske typer? ja :)
