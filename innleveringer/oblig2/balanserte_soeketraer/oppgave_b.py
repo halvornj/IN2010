@@ -1,7 +1,7 @@
 import sys
 import math
 from heapq import heappush, heappop
-def balance(A:list ):
+def balance(A:list):
     if len(A) <= 0: return 
     if len(A) == 1:
         print(heappop(A))
@@ -10,8 +10,7 @@ def balance(A:list ):
     a1 = [heappop(A) for a in range(splitIndex)]
     print(heappop(A))
     balance(a1)
-    a2 = [heappop(A) for a in range(len(A))]
-    balance(a2)
+    balance(A)
 
 
 
