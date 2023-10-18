@@ -17,10 +17,10 @@ public class SixDegrees {
                 "six-degrees-of-imdb-ressursside/movies.tsv");
 
         if (args[0].toLowerCase().equals("korteste") || args[0].toLowerCase().equals("shortest")) {
-            // printShortestPath(graph, "nm2255973", "nm0000460");
-            // printShortestPath(graph, "nm0424060", "nm8076281");
-            // printShortestPath(graph, "nm4689420", "nm0000365");
-            // printShortestPath(graph, "nm0000288", "nm2143282");
+            printShortestPath(graph, "nm2255973", "nm0000460");
+            printShortestPath(graph, "nm0424060", "nm8076281");
+            printShortestPath(graph, "nm4689420", "nm0000365");
+            printShortestPath(graph, "nm0000288", "nm2143282");
             printShortestPath(graph, "nm0637259", "nm0931324");
 
         } else if (args[0].toLowerCase().equals("chilleste") || args[0].toLowerCase().equals("chillest")) {
@@ -56,7 +56,7 @@ public class SixDegrees {
             formattedString += path.get(i);
         }
 
-        System.out.println(formattedString);
+        System.out.println(formattedString + "\n");
     }
 
     // *trenger ikke bry oss om å besøke alle komponenter, om nodene ikke er i samme
@@ -93,6 +93,9 @@ public class SixDegrees {
                     ArrayList<Node> newPath = new ArrayList<>(currentPath);
                     newPath.add(mov);
                     newPath.add(act);
+                    if (act.getID().equals(goalID)) {
+                        return newPath;
+                    }
                     toVisit.add(newPath);
                 }
             }
@@ -102,5 +105,6 @@ public class SixDegrees {
     }
 
     public static void printChillestPath() {
+
     }
 }
