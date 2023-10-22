@@ -1,9 +1,14 @@
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Queue;
 import java.util.LinkedList;
 import java.util.Map;
+import java.util.List;
+import java.util.PriorityQueue;
 
 public class SixDegrees {
     public static void main(String[] args) {
@@ -24,7 +29,7 @@ public class SixDegrees {
             printShortestPath(graph, "nm0637259", "nm0931324");
 
         } else if (args[0].toLowerCase().equals("chilleste") || args[0].toLowerCase().equals("chillest")) {
-            printChillestPath();
+            printChillestPath(graph);
         } else {
             System.out.println(
                     "error: gjennkjenner ikke argumentet. vennligst kjør programmet med enten \"korteste\" eller \"chilleste\" som argument, for hhv. korteste og chilleste sti mellom 2 skuespillere.");
@@ -82,8 +87,8 @@ public class SixDegrees {
         if (currentActor.getID().equals(goalID)) {
             return currentPath;
         }
-        if (visited.size() == actors.size()) { // all nodes have been tried, the search is impossible. maybe throw an
-                                               // error?
+        // all nodes have been tried, the search is impossible. maybe throw an error?
+        if (visited.size() == actors.size()) {
             return null;
         }
         // *this loop should be functional. i thought really hard when i wrote it :)
@@ -104,7 +109,96 @@ public class SixDegrees {
         return BFSVisit(actors, next, goalID, visited, toVisit);
     }
 
-    public static void printChillestPath() {
+    @SuppressWarnings("unchecked")
+    public static void printChillestPath(HashMap<String, HashSet<Node>> graph) {
+        HashMap<String, List<HashMap>> startActors = new HashMap<>();
+        HashMap<String, Actor> stopActorLinks = new HashMap<>();
+        // startLoop
+        for (Node actNode : graph.get("actors")) {
+            Actor actor = (Actor) actNode;
+            if (actor.getID().equals("nm2255973")) {
+                startActors.put(actor.getID(), weightedSearch(actor));
+            } else if (actor.getID().equals("nm0424060")) {
+                startActors.put(actor.getID(), weightedSearch(actor));
+            } else if (actor.getID().equals("nm4689420")) {
+                startActors.put(actor.getID(), weightedSearch(actor));
+            } else if (actor.getID().equals("nm0000288")) {
+                startActors.put(actor.getID(), weightedSearch(actor));
+            } else if (actor.getID().equals("nm0637259")) {
+                startActors.put(actor.getID(), weightedSearch(actor));
+            } else if (actor.getID().equals("nm0000460")) {
+                stopActorLinks.put("nm2255973", actor);
+            } else if (actor.getID().equals("nm8076281")) {
+                stopActorLinks.put("nm0424060", actor);
+            } else if (actor.getID().equals("nm0000365")) {
+                stopActorLinks.put("nm4689420", actor);
+            } else if (actor.getID().equals("nm2143282")) {
+                stopActorLinks.put("nm0000288", actor);
+            } else if (actor.getID().equals("nm0931324")) {
+                stopActorLinks.put("nm0637259", actor);
+            }
+            if (startActors.size() == 5 && stopActorLinks.size() == 5) {
+                break;
+            }
+        }
 
+        for (String startID : startActors.keySet()) {
+            HashMap<Node, Node> parents = startActors.get(startID).get(0);
+            HashMap<Node, Double> weights = startActors.get(startID).get(1);
+            ArrayList<Node> path = new ArrayList<>();
+            Node current = stopActorLinks.get(startID);
+            while (current != null) {
+                path.add(current);
+                current = parents.get(current);
+            }
+            Collections.reverse(path);
+            System.out.println(path);
+            System.out.println(weights.get(stopActorLinks.get(startID)));
+        }
+
+    }
+
+    // ja dette er et raw hashmap, og det er vell strengt tatt ulovlig, men er den
+    // enkleste måten å jukse og få tupler i java.
+    // kunne jeg importert javatuples-library, men jeg gidder ikke begynne å styre
+    // med pom.xml. dette er ikke et java-fag, algoritmen fungerer som den skal.
+    public static List<HashMap> weightedSearch(Actor start) {
+        HashMap<Node, Node> parents = new HashMap<>();
+        HashMap<Node, Double> distances = new HashMap<>();
+        List<HashMap> tuple = Arrays.asList(parents, distances);
+        parents.put(start, null);
+        distances.put(start, 0.0);
+        PriorityQueue<Actor> queue = new PriorityQueue<>(100000, new Comparator<Node>() {
+            @Override
+            public int compare(Node node1, Node node2) {
+                if (distances.get(node1) < distances.get(node2)) {
+                    return -1;
+                }
+                if (distances.get(node1) > distances.get(node2)) {
+                    return 1;
+                }
+                return 0;
+            }
+        });
+        queue.add(start);
+        while (!queue.isEmpty()) {
+            Actor current = queue.remove();
+            for (Movie mov : current.getMovies()) {
+                for (Actor neighbour : mov.getActors()) {
+                    Double c = distances.get(current) + weight(mov);
+                    if (c < distances.getOrDefault(neighbour, Double.POSITIVE_INFINITY)) {
+                        distances.put(neighbour, c);
+                        queue.add(neighbour);
+                        parents.put(neighbour, mov);
+                        parents.put(mov, current);
+                    }
+                }
+            }
+        }
+        return tuple;
+    }
+
+    private static double weight(Movie m) {
+        return 10 - m.getRating();
     }
 }
