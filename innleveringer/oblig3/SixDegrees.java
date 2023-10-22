@@ -22,12 +22,7 @@ public class SixDegrees {
                 "six-degrees-of-imdb-ressursside/movies.tsv");
 
         if (args[0].toLowerCase().equals("korteste") || args[0].toLowerCase().equals("shortest")) {
-            printShortestPath(graph, "nm2255973", "nm0000460");
-            printShortestPath(graph, "nm0424060", "nm8076281");
-            printShortestPath(graph, "nm4689420", "nm0000365");
-            printShortestPath(graph, "nm0000288", "nm2143282");
-            printShortestPath(graph, "nm0637259", "nm0931324");
-
+            printShortestPath(graph);
         } else if (args[0].toLowerCase().equals("chilleste") || args[0].toLowerCase().equals("chillest")) {
             printChillestPath(graph);
         } else {
@@ -35,6 +30,14 @@ public class SixDegrees {
                     "error: gjennkjenner ikke argumentet. vennligst kjør programmet med enten \"korteste\" eller \"chilleste\" som argument, for hhv. korteste og chilleste sti mellom 2 skuespillere.");
             System.exit(1);
         }
+    }
+
+    public static void printShortestPath(HashMap<String, HashSet<Node>> graph) {
+        printShortestPath(graph, "nm2255973", "nm0000460");
+        printShortestPath(graph, "nm0424060", "nm8076281");
+        printShortestPath(graph, "nm4689420", "nm0000365");
+        printShortestPath(graph, "nm0000288", "nm2143282");
+        printShortestPath(graph, "nm0637259", "nm0931324");
     }
 
     public static void printShortestPath(HashMap<String, HashSet<Node>> graph, String id1, String id2) {
@@ -152,8 +155,13 @@ public class SixDegrees {
                 current = parents.get(current);
             }
             Collections.reverse(path);
-            System.out.println(path);
-            System.out.println(weights.get(stopActorLinks.get(startID)));
+            String formattedString = path.get(0).toString();
+            for (int i = 1; i < path.size(); i++) {
+                formattedString += "===>";
+                formattedString += path.get(i);
+            }
+            System.out.println(formattedString);
+            System.out.println("total weight: " + weights.get(stopActorLinks.get(startID)) + "\n");
         }
 
     }

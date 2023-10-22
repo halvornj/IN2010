@@ -1,10 +1,12 @@
 # IN2010 Innlevering 3 halvorin
 
+hver deloppgave kan kjøres uavhengig i sin respektive java-fil, eller hele innleveringen kan kjøres fra `Hovedprogram.java`.
+
 ## Bygg grafen
 
 #### deloppgave 1
 
-implementert i `populateGraph.GraphBuilder.java`.
+implementert i `GraphBuilder.populateGraph.java`.
 
 #### deloppgave 2
 
@@ -15,3 +17,7 @@ Denne formelen går imidlertidig ikke opp med programmets output uten videre; i 
 I implementasjonen uten Movie-noder ville dette tilsvare en kant fra en skuespiller til ingenting. Om vi filtrerer ut disse får vi 751931 kanter, og om vi for hver av disse filmene med mer enn 1 skuespiller plugger inn N i formelen `N*(N-1)/2` for å regne ut ekvivalente kanter i løsningen som vises i oppgaveteksten får vi 5342530 kanter.
 
 ## Six Degrees of IMDB
+
+### korteste sti
+
+implementert i `Six`

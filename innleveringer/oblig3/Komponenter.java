@@ -8,8 +8,11 @@ public class Komponenter {
                 "six-degrees-of-imdb-ressursside/actors.tsv",
                 "six-degrees-of-imdb-ressursside/movies.tsv");
 
+        findComponentSizes(graph);
+    }
+
+    public static void findComponentSizes(HashMap<String, HashSet<Node>> graph) {
         HashSet<Node> allActors = graph.get("actors");
-        System.out.println(allActors.size());
         HashMap<Integer, Integer> componentSizes = new HashMap<>(); // key is the num of nodes in a component, value is
                                                                     // the num of components with said node-count.
         while (!allActors.isEmpty()) {
@@ -32,7 +35,6 @@ public class Komponenter {
             componentSizes.put(count, componentSizes.getOrDefault(count, 0) + 1);
         }
 
-        System.out.println("aaaaaaaaa");
         for (Integer i : componentSizes.keySet()) {
             System.out.println("There are " + componentSizes.get(i) + " components of size " + i + ".");
         }
