@@ -20,9 +20,8 @@ public class HeshMep<K, V> {
 
     public void put(K key, V value) {
         size++;
-        // todo rehash on size/capacity > 0.75
-        if (size / capacity > 0.75) {
-            System.err.println("rehashing");
+        if ((size / (double) capacity) > 0.7) {
+            System.err.println("rehashing, size=" + size + ", capacity=" + capacity);
             rehash();
         }
 
@@ -30,7 +29,6 @@ public class HeshMep<K, V> {
         LinkedList<Tuple<K, V>> bucket = buckets[hash];
         Tuple<K, V> tuple = new Tuple<K, V>(key, value);
         if (bucket == null) {
-            System.err.println("creating bucket for key " + key);
             bucket = new LinkedList<Tuple<K, V>>();
             buckets[hash] = bucket;
             bucket.add(tuple);
@@ -38,13 +36,11 @@ public class HeshMep<K, V> {
         }
         for (Tuple<K, V> found : bucket) {
             if (found.getFirst().equals(key)) {
-                System.err.println("found key, replacing " + key);
-                found = tuple;
+                found.setSecond(value);
                 size--;
                 return;
             }
         }
-        System.err.println("adding key " + key + " to already existing bucket");
         bucket.add(tuple);
     }
 
@@ -82,7 +78,6 @@ public class HeshMep<K, V> {
         LinkedList<Tuple<K, V>> bucket = buckets[hash];
         // må ha selve Tuple-objektet for å fjerne det, så itererer for å finne
         if (bucket == null) {
-            System.err.println("ay caramba");
             return;
         }
         for (Tuple<K, V> found : bucket) {
@@ -127,7 +122,6 @@ public class HeshMep<K, V> {
     }
 
     public void errorPrint() {
-        System.err.println("bucket count: " + buckets.length);
         for (LinkedList<Tuple<K, V>> bucket : buckets) {
             System.out.println(bucket);
         }
