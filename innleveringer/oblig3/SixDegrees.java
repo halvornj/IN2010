@@ -57,7 +57,13 @@ public class SixDegrees {
 
         ArrayList<Node> startPath = new ArrayList<>();
         startPath.add(startActor);
-        ArrayList<Node> path = BFSVisit(graph.get("actors"), startPath, id2, new HashSet<>(), new LinkedList<>());
+        ArrayList<Node> path = BFSVisit(graph.get("actors"), startPath, id2, new HashSet<>(),
+                new PriorityQueue<>(new Comparator<ArrayList>() {
+                    @Override
+                    public int compare(ArrayList arr1, ArrayList arr2) {
+                        return 0;
+                    }
+                }));
         String formattedString = path.get(0).toString();
         for (int i = 1; i < path.size(); i++) {
             formattedString += "===>";
@@ -171,12 +177,12 @@ public class SixDegrees {
     // kunne jeg importert javatuples-library, men jeg gidder ikke begynne å styre
     // med pom.xml. dette er ikke et java-fag, algoritmen fungerer som den skal.
     public static List<HashMap> weightedSearch(Actor start) {
-        HashMap<Node, Node> parents = new HashMap<>();
-        HashMap<Node, Double> distances = new HashMap<>();
+        HashMap<Node, Node> parents = new HashMap<>(175000);
+        HashMap<Node, Double> distances = new HashMap<>(175000);
         List<HashMap> tuple = Arrays.asList(parents, distances);
         parents.put(start, null);
         distances.put(start, 0.0);
-        PriorityQueue<Actor> queue = new PriorityQueue<>(100000, new Comparator<Node>() {
+        PriorityQueue<Actor> queue = new PriorityQueue<>(150000, new Comparator<Node>() {
             @Override
             public int compare(Node node1, Node node2) {
                 if (distances.get(node1) < distances.get(node2)) {
