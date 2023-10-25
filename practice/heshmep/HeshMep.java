@@ -91,6 +91,10 @@ public class HeshMep<K, V> {
     }
 
     public static int Hesh(Object val, int n) {
+        // ok well this is kind of cheating, because well 1. the string representation
+        // isn't neccesarily unique for every object of a class,
+        // and 2. if a class doesn't have a tostring the default IS unique for each
+        // object, but it's gotten via javas default hashcode method.
         String value = (String) val.toString();
         int total = 0;
         for (int i = 0; i < value.length(); i++) {
