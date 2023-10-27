@@ -1,18 +1,18 @@
 import java.util.LinkedList;
 
-public class HeshMep<K, V> {
+public class HashMap<K, V> {
     LinkedList<Tuple<K, V>>[] buckets;
     int size;
     int capacity;
 
     @SuppressWarnings("unchecked")
-    public HeshMep(int initialCapacity) {
+    public HashMap(int initialCapacity) {
         buckets = new LinkedList[initialCapacity];
         capacity = initialCapacity;
     }
 
     @SuppressWarnings("unchecked")
-    public HeshMep() {
+    public HashMap() {
         // guess at initialSize
         buckets = new LinkedList[10];
         capacity = 10;
@@ -65,6 +65,9 @@ public class HeshMep<K, V> {
     public V get(K key) {
         int hash = Hesh(key, capacity);
         LinkedList<Tuple<K, V>> bucket = buckets[hash];
+        if (bucket == null) {
+            return null;
+        }
         for (Tuple<K, V> found : bucket) {
             if (found.getFirst().equals(key)) {
                 return found.getSecond();
