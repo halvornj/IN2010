@@ -29,7 +29,7 @@ public class Set<Integer> {
         int hash = Hash(val, capacity);
         int position = hash;
         while (array[position] != null) {
-            if (array[position] == val) {
+            if (array[position].equals(val)) {
                 // already in set
                 return;
             }
