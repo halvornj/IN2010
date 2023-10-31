@@ -1,7 +1,7 @@
-line1 = input().split()
 line2 = input().split()
 line3 = input().split()
 line4 = input().split()
+
 
 move = input()
 x = 0
