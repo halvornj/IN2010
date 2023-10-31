@@ -11,20 +11,23 @@ abstract class Main {
         String input = "";
         while (!(input = sc.nextLine()).equals("-1")) {
             String[] split = input.split(" ");
+            for (String s : split) {
+                System.err.println("!" + s + "!");
+            }
             int parentInteger = Integer.parseInt(split[0]);
-            Node<Integer> parent = nodes.get(parentInteger);
-            if (parent == null) {// wasn't found in dict. means node is root of a component.
+            Node<Integer> parent = null;
+            if (nodes.size() == 0) {// wasn't found in dict. means node is root of a component.
                 parent = new Node<Integer>(parentInteger);
                 nodes.put(parentInteger, parent);
             }
-            Node<Integer>[] children = (Node<Integer>[]) new Object[split.length - 1];
+            parent = nodes.get(parentInteger);
 
             for (int i = 1; i < split.length; i++) {
                 Node<Integer> child = new Node<Integer>(Integer.parseInt(split[i]));
-                children[i - 1] = (child);
+                parent.addChild(child);
                 nodes.put(Integer.parseInt(split[i]), child);
             }
-            tree.addChildren(parent, children);
+
         }
 
         // tree is now built, now we make the search.
@@ -38,5 +41,8 @@ abstract class Main {
         pathStr = pathStr.trim();
 
         System.out.println(pathStr);
+
+        // !temp
+        System.err.println(tree.root);
     }
 }

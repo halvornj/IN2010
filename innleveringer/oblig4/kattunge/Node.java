@@ -1,5 +1,5 @@
 class Node<E> {
-    Node<E>[] children;
+    HashMap<E, Node<E>> children;
     Node<E> parent;
     E data;
 
@@ -8,10 +8,15 @@ class Node<E> {
     }
 
     public void addChildren(Node<E>[] c) {
-        children = c;
-        for (Node<E> child : children) {
+        for (Node<E> child : c) {
+            children.put(child.data, child);
             child.setParent(this);
         }
+    }
+
+    public void addChild(Node<E> c) {
+        children.put(c.data, c);
+        c.setParent(this);
     }
 
     public void setParent(Node<E> p) {

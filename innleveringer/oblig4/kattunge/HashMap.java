@@ -21,7 +21,7 @@ public class HashMap<K, V> {
     public void put(K key, V value) {
         size++;
         if ((size / (double) capacity) > 0.7) {
-            System.err.println("rehashing, size=" + size + ", capacity=" + capacity);
+            // System.err.println("rehashing, size=" + size + ", capacity=" + capacity);
             rehash();
         }
 

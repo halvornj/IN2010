@@ -22,6 +22,9 @@ public class Tree<T> {
      * @param children the array of child nodes to add
      */
     public void addChildren(Node<T> parent, Node<T>[] children) {
+        if (root == null) {
+            root = parent;
+        }
         parent.addChildren(children);
     }
 
@@ -34,6 +37,8 @@ public class Tree<T> {
     public ArrayList<Node<T>> pathToRoot(ArrayList<Node<T>> path) {
         Node<T> current = path.get(path.size() - 1);
         if (current.parent == null) {
+            System.err.println(current);
+            System.err.println(current.children);
             return path;
         }
         path.add(current.parent);
