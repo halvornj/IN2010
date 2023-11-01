@@ -1,6 +1,9 @@
-for i in range(10):
-    for j in range(10):
-        print(f"{i=}", end=", ")
-        print(f"{j=}")
-        if i== 5 and j==5:
-            break
+s = "UAAAAAPC"
+print(f"{s=}")
+
+se = set(s)
+print(f"{se}")
+ls = list(se)
+print(f"{ls}")
+st = ''.join(ls)
+print(f"{st}")
